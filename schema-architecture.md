@@ -13,5 +13,6 @@ Section 2: Numbered flow of data and control
   2. The action is routed to the appropriate Thymeleaf or REST controller.
   3. Controllers delegate logic to the Service Layer, which acts as the heart of the backend system
   4. The service layer communicates with the Repository Layer to perform data access operations
-  5. Once data is retrieved from the database, it is mapped into Java model classes that the application can work with
-  6. Finally, the bound models are used in the response layer
+  5. Each repository interfaces directly with the underlying database engine (MySQL or MongoDB )
+  6. Once data is retrieved from the database, it is mapped into Java model classes that the application can work with
+  7. Finally, the bound models are used in the response layer
