@@ -4,18 +4,24 @@
 ### Table: patients
 - id: INT, Primary Key, Auto Increment
 - name: VARCHAR , Not Null
-- username: VARCHAR , Not Null
+- email: VARCHAR , Not Null
 - password: VARCHAR , Not Null
+- phone: VARCHAR , Not Null
+- address: VARCHAR , Not Null
+- appointments : List<Appointment> 
 
 ### Table: doctors
 - id: INT, Primary Key, Auto Increment
 - name: VARCHAR , Not Null
-- username: VARCHAR , Not Null
+- specialty: VARCHAR , Not Null
+- email: VARCHAR , Not Null
 - password: VARCHAR , Not Null
+- phone: VARCHAR , Not Null
+- availableTimes: List<String>
+- appointments : List<Appointment>
 
 ### Table: admins
 - id: INT, Primary Key, Auto Increment
-- name: VARCHAR , Not Null
 - username: VARCHAR , Not Null
 - password: VARCHAR , Not Null
 
@@ -30,8 +36,10 @@
 
 ## MongoDB Collection Design
 
-### Table: doctors
-- id: INT, Primary Key, Auto Increment
-- name: VARCHAR , Not Null
-- username: VARCHAR , Not Null
-- password: VARCHAR , Not Null
+### Table: prescription
+- id: String, Primary Key
+- patientName: String, Not Null
+- appointmentId: Long, Not Null
+- medication: String, min = 3, max = 100
+- dosage: String, Not Null.
+- doctorNotes: String, max = 200
