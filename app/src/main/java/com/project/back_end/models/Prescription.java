@@ -28,6 +28,7 @@ public class Prescription {
 //      - The @NotNull annotation ensures that the patient name is required.
 //      - The @Size(min = 3, max = 100) annotation ensures that the name length is between 3 and 100 characters, ensuring a reasonable name length.
     @NotNull
+    @Size(min = 3, max = 100)
     private String patientName;
 
     // 3. 'appointmentId' field:

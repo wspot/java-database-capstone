@@ -31,7 +31,7 @@ public class Admin {
 //      - Represents the username of the admin.
 //      - Used to log into the system.
 //      - @NotNull validation ensures that this field cannot be null when creating or updating an Admin.
-    @NotNull
+    @NotNull(message = "username cannot be null")
     private String username;
 
     // 3. 'password' field:

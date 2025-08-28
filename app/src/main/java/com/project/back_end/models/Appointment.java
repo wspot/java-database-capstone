@@ -52,7 +52,7 @@ public class Appointment {
 //      - Represents the date and time when the appointment is scheduled to occur.
 //      - The @Future annotation ensures that the appointment time is always in the future when the appointment is created.
 //      - It uses LocalDateTime, which includes both the date and time for the appointment.
-    @Future
+    @Future(message = "Appointment time must be in the future")
     private LocalDateTime appointmentTime;
 
     // 5. 'status' field:
@@ -62,7 +62,7 @@ public class Appointment {
 //        - 0 means the appointment is scheduled.
 //        - 1 means the appointment has been completed.
 //      - The @NotNull annotation ensures that the status field is not null.
-    @NotNull
+    @NotNull(message = "status cannot be null")
     private int status;
 
 // 6. 'getEndTime' method:
@@ -77,7 +77,7 @@ public class Appointment {
                 this.appointmentTime.getYear(),
                 this.appointmentTime.getMonth(),
                 this.appointmentTime.getDayOfMonth(),
-                this.appointmentTime.getHour() + 1,
+                this.appointmentTime.plusHours(1).getHour(),
                 this.appointmentTime.getMinute(),
                 this.appointmentTime.getSecond()
         );
