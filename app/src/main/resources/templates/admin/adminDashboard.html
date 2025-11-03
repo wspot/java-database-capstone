@@ -107,3 +107,48 @@ with search, filter, and modal functionality.
 
  -->
 
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Admin dashboard</title>
+        <link rel="stylesheet" th:href="@{/assets/css/adminDashboard.css}">
+        <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+        <script th:src="@{/js/render.js}" defer></script>
+        <script th:src="@{/js/util.js}" defer></script>
+        <script th:src="@{/js/components/header.js}" defer></script>
+        <script th:src="@{/js/components/footer.js}" defer></script>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="wrapper">
+                <div id="header"></div>
+                <main class="main-content">
+
+                    <input type="text" id="searchBar" placeholder="search by doctor name" />
+
+                    <label for="sortingCriteria">Choose a criteria:</label>
+                    <select name="sortingCriteria" id="sortingCriteria">
+                        <option value="timeSort">by time</option>
+                        <option value="specialitySort">by specialty</option>
+                    </select>
+
+                    <div id="content"></div>
+
+                </main>
+                <div id="footer"></div>
+            </div>
+        </div>
+
+        <div id="modal" class="modal">
+            <span id="closeModal" class="close">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+
+        <script type="module" src="../js/services/adminDashboard.js" defer></script>
+        <script type="module" src="../js/components/doctorCard.js" defer></script>
+    </body>
+
+</html>
