@@ -152,7 +152,7 @@ export function renderHeader() {
     if ((role === "loggedPatient" || role === "admin" || role === "doctor") && !token) {
              localStorage.removeItem("userRole");
              alert("Session expired or invalid login. Please log in again.");
-             window.location.href = "/";   or a specific login page
+             window.location.href = "/";
              return;
            }
     else if (role === "admin") {
@@ -180,15 +180,15 @@ export function renderHeader() {
 }
 
 export function attachHeaderButtonListeners() {
-        const doctorButton = document.getElementById(“addDocBtn”);
-        const adminButton = document.getElementById(“adminBtn”);
+        const doctorButton = document.getElementById("addDocBtn");
+        const adminButton = document.getElementById("adminBtn");
 
         if(doctorButton){
-            doctorButton.addEventListener(“click”, openModal('addDoctor'));
+            doctorButton.addEventListener("click", openModal('addDoctor'));
         }
 
         if(adminButton) {
-            adminButton.addEventListener(“click”, selectRole('doctor'));
+            adminButton.addEventListener("click", selectRole('doctor'));
         }
 }
 
