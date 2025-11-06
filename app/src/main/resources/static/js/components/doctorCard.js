@@ -41,6 +41,7 @@ Import the overlay function for booking appointments from loggedPatient.js
 */
 
 import { API_BASE_URL } from "../config/config.js";
+import {deleteDoctor} from "../services/doctorServices";
 const DOCTOR_API = API_BASE_URL + '/doctor';
 
 export function createDoctorCard(doctor) {
@@ -53,6 +54,15 @@ export function createDoctorCard(doctor) {
 
     const name = document.createElement("h3");
     name.textContent = doctor.name;
+
+    const specialization = document.createElement("p");
+    specialization.textContent = doctor.specialization;
+
+    const email = document.createElement("p");
+    email.textContent = doctor.email;
+
+    const availability = document.createElement("p");
+    availability.textContent = doctor.availability;
 
     infoDiv.appendChild(name);
     infoDiv.appendChild(specialization);
@@ -67,34 +77,8 @@ export function createDoctorCard(doctor) {
       removeBtn.textContent = "Delete";
 
       removeBtn.addEventListener("click", async () => {
-        // 1. Confirm deletion
-        // 2. Get token from localStorage
-        // 3. Call API to delete
-        // 4. On success: remove the card from the DOM
-
         const token = localStorage.getItem("token");
-
-        try {
-            const response = await fetch(`${DOCTOR_API}/${token}`,
-              {
-                method: "DELETE",
-                headers: {
-                  "Content-type": "application/json"
-                },
-                body: JSON.stringify(data)
-              }
-            );
-            const result = await response.json();
-            if (!response.ok) {
-              throw new Error(result.message);
-            }
-            card.remove();
-            // return { success: response.ok, message: result.message }
-          }
-          catch (error) {
-            console.error("Error :: delete doctor :: ", error)
-            // return { success: false, message: error.message }
-          }
+        await deleteDoctor(doctor.id, token);
       });
     }
 

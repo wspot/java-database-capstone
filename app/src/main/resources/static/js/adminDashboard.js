@@ -70,3 +70,68 @@
 
     If saving fails, show an error message
 */
+import {openModal} from "./components/modals.js";
+import {getDoctors, filterDoctors, saveDoctor} from "./services/doctorServices";
+import {createDoctorCard} from "./components/doctorCard";
+
+
+document.getElementById('addDocBtn').addEventListener('click', () => {
+    openModal('addDoctor');
+});
+
+function loadDoctorCards() {
+    const contentDiv = document.getElementById("content");
+    contentDiv.innerHTML = "";
+    getDoctors().then(doctors => {
+        doctors.forEach(doctor => {
+            const card = createDoctorCard(doctor);
+            contentDiv.appendChild(card);
+        })
+    })
+}
+
+function renderDoctorCards(doctors) {
+    const contentDiv = document.getElementById("content");
+    contentDiv.innerHTML = "";
+
+    doctors.forEach(doctor => {
+        const card = createDoctorCard(doctor);
+        contentDiv.appendChild(card);
+    });
+}
+
+function filterDoctorsOnChange(event) {
+    // The element that triggered the event
+    const element = event.target;
+
+    // Get its id
+    const id = element.id;
+
+    // Get its value
+    const value = element.value;
+
+    // Example: do something based on which filter changed
+    if (id === "searchBar") {
+        console.log("Filtering doctors by name:", value);
+        filterDoctors(value, "", "").then((docs) => {
+            renderDoctorCards(docs);
+        });
+    } else if (id === "filterTime") {
+        console.log("Filtering doctors by available time:", value);
+        filterDoctors("", value, "").then((docs) => {
+            renderDoctorCards(docs);
+        });
+    } else if (id === "filterSpecialty") {
+        console.log("Filtering doctors by specialty:", value);
+        filterDoctors("", "", value).then((docs) => {
+            renderDoctorCards(docs);
+        });
+    }
+}
+
+window.onload = () => {
+    loadDoctorCards();
+    document.getElementById("searchBar").addEventListener("input", filterDoctorsOnChange);
+    document.getElementById("filterTime").addEventListener("change", filterDoctorsOnChange);
+    document.getElementById("filterSpecialty").addEventListener("change", filterDoctorsOnChange);
+}

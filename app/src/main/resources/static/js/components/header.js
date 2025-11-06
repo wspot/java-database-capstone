@@ -122,6 +122,7 @@
 
   16. **Render the Header**: Finally, the `renderHeader()` function is called to initialize the header rendering process when the page loads.
 */
+import {openModal} from "./modals";
 
 export function renderHeader() {
 
@@ -132,7 +133,7 @@ export function renderHeader() {
              headerDiv.innerHTML = `
                <header class="header">
                  <div class="logo-section">
-                   <img src="../assets/images/logo/logo.png" alt="Hospital CRM Logo" class="logo-img">
+                   <img src="../../assets/images/logo/logo.png" alt="Hospital CRM Logo" class="logo-img">
                    <span class="logo-title">Hospital CMS</span>
                  </div>
                </header>`;
@@ -144,7 +145,7 @@ export function renderHeader() {
 
     let headerContent = `<header class="header">
                  <div class="logo-section">
-                   <img src="../assets/images/logo/logo.png" alt="Hospital CRM Logo" class="logo-img">
+                   <img src="../../assets/images/logo/logo.png" alt="Hospital CRM Logo" class="logo-img">
                    <span class="logo-title">Hospital CMS</span>
                  </div>
              <nav>`;
@@ -203,3 +204,5 @@ export function logoutPatient() {
     localStorage.seItem("patient");
     window.location.href = "/";
 }
+
+renderHeader()
