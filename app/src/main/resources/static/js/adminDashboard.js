@@ -101,32 +101,13 @@ function renderDoctorCards(doctors) {
 }
 
 function filterDoctorsOnChange(event) {
-    // The element that triggered the event
-    const element = event.target;
+    const nameValue = document.getElementById("searchBar").value;
+    const timeValue = document.getElementById("searchTime").value;
+    const specialtyValue = document.getElementById("searchSpecialty").value;
 
-    // Get its id
-    const id = element.id;
-
-    // Get its value
-    const value = element.value;
-
-    // Example: do something based on which filter changed
-    if (id === "searchBar") {
-        console.log("Filtering doctors by name:", value);
-        filterDoctors(value, "", "").then((docs) => {
-            renderDoctorCards(docs);
-        });
-    } else if (id === "filterTime") {
-        console.log("Filtering doctors by available time:", value);
-        filterDoctors("", value, "").then((docs) => {
-            renderDoctorCards(docs);
-        });
-    } else if (id === "filterSpecialty") {
-        console.log("Filtering doctors by specialty:", value);
-        filterDoctors("", "", value).then((docs) => {
-            renderDoctorCards(docs);
-        });
-    }
+    filterDoctors(nameValue, timeValue, specialtyValue).then((docs) => {
+        renderDoctorCards(docs);
+    });
 }
 
 window.onload = () => {
