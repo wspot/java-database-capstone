@@ -103,7 +103,7 @@
 
 */
 
-export function renderFooter() {
+function renderFooter() {
     const footer = document.getElementById("footer");
     footer.innerHTML = `
         <footer class="footer">

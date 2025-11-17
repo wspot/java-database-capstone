@@ -122,7 +122,7 @@
 
   16. **Render the Header**: Finally, the `renderHeader()` function is called to initialize the header rendering process when the page loads.
 */
-import {openModal} from "./modals";
+import {openModal} from "/js/components/modals.js";
 
 export function renderHeader() {
 

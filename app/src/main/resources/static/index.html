@@ -128,9 +128,9 @@ and triggers modal-based login functionality.
         <main class="main-content">
 
             <h2>Select Your Role</h2>
-            <button id="choose-admin-button" onclick="onChooseAdmin()">Admin</button>
-            <button id="choose-paient-button" onclick="onChoosePatient()">Patient</button>
-            <button id="choose-docor-button" onclick="onChooseDoctor()">Doctor</button>
+            <button id="adminLogin">Admin</button>
+            <button id="choose-patient-button" onclick="onChoosePatient()">Patient</button>
+            <button id="choose-doctor-button" onclick="onChooseDoctor()">Doctor</button>
 
         </main>
         <div id="footer"></div>
@@ -139,7 +139,7 @@ and triggers modal-based login functionality.
 
 <script src="./js/util.js" defer></script>
 <script src="./js/render.js" defer></script>
-<script src="./js/components/header.js" defer></script>
+<script type="module" src="./js/components/header.js" defer></script>
 <script src="./js/components/footer.js" defer></script>
 <script type="module" src="./js/services/index.js" defer></script>
 </body>
