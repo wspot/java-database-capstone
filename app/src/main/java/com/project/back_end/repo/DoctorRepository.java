@@ -3,9 +3,11 @@ package com.project.back_end.repo;
 import com.project.back_end.models.Doctor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
     // 1. Extend JpaRepository:
 //    - The repository extends JpaRepository<Doctor, Long>, which gives it basic CRUD functionality.
@@ -27,15 +29,13 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
 //      - The `CONCAT('%', :name, '%')` is used to create a pattern for partial matching.
 //      - Return type: List<Doctor>
 //      - Parameters: String name
-    @Query("select Doctor from Doctor where Doctor .name like concat('%',?1, '%') ")
-    public Doctor findByNameLike(String name);
+    public List<Doctor> findByNameLike(String name);
 
 //    - **findByNameContainingIgnoreCaseAndSpecialtyIgnoreCase**:
 //      - This method retrieves a list of Doctors where the name contains the search string (case-insensitive) and the specialty matches exactly (case-insensitive).
 //      - It combines both fields for a more specific search.
 //      - Return type: List<Doctor>
 //      - Parameters: String name, String specialty
-    @Query("select Doctor  from Doctor where lower(Doctor .name) like concat('%', lower(?1), '%') and lower(Doctor .specialty) = lower(?2)")
     public List<Doctor> findByNameContainingIgnoreCaseAndSpecialtyIgnoreCase(String name, String specialty);
 
 //    - **findBySpecialtyIgnoreCase**:

@@ -5,6 +5,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -28,16 +29,32 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 //      - Return type: List<Appointment>
 //      - Parameters: Long doctorId, LocalDateTime start, LocalDateTime end
 //      - It uses a LEFT JOIN to fetch the doctor’s available times along with the appointments.
-    @Query("select Appointment.id , Appointment.status , Appointment.appointmentTime ,  Doctor.availableTimes from Appointment LEFT JOIN Doctor ON Appointment.doctor.id = ?1 where Appointment.appointmentTime >= ?2 and Appointment.appointmentTime <= ?3")
-    public List<Appointment> findByDoctorIdAndAppointmentTimeBetween(Long doctorId, LocalDateTime start, LocalDateTime end);
+    @Query(
+            """
+                    SELECT a
+                        FROM Appointment a
+                        JOIN a.doctor d
+                        WHERE d.id = :doctorId
+                          AND a.appointmentTime BETWEEN :start AND :end
+                    """
+    )
+    public List<Appointment> findByDoctorIdAndAppointmentTimeBetween(@Param("doctorId") Long doctorId, @Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 
     //    - **findByDoctorIdAndPatient_NameContainingIgnoreCaseAndAppointmentTimeBetween**:
 //      - This method retrieves appointments for a specific doctor and patient name (ignoring case) within a given time range.
 //      - It performs a LEFT JOIN to fetch both the doctor and patient details along with the appointment times.
 //      - Return type: List<Appointment>
 //      - Parameters: Long doctorId, String patientName, LocalDateTime start, LocalDateTime end
-    @Query("select Appointment.id , Appointment.status , Appointment.appointmentTime ,  Doctor.availableTimes , Patient .name from Appointment LEFT JOIN Doctor ON Appointment.doctor.id = ?1 LEFT JOIN Patient ON lower(Appointment.patient.name) = lower(?2) where Appointment.appointmentTime >= ?3 and Appointment.appointmentTime <= ?4")
-    public List<Appointment> findByDoctorIdAndPatient_NameContainingIgnoreCaseAndAppointmentTimeBetween(Long doctorId, String patientName, LocalDateTime start, LocalDateTime end);
+    @Query("""
+            SELECT a
+                FROM Appointment a
+                JOIN a.doctor d
+                JOIN FETCH a.patient p
+                WHERE d.id = :doctorId
+                  AND LOWER(p.name) LIKE LOWER(CONCAT('%', :patientName, '%'))
+                  AND a.appointmentTime BETWEEN :start AND :end
+            """)
+    public List<Appointment> findByDoctorIdAndPatient_NameContainingIgnoreCaseAndAppointmentTimeBetween(@Param("doctorId") Long doctorId, @Param("patientName") String patientName, @Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 
     //    - **deleteAllByDoctorId**:
 //      - This method deletes all appointments associated with a particular doctor.
@@ -64,22 +81,39 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 //      - This method retrieves appointments based on a doctor’s name (using a LIKE query) and the patient’s ID.
 //      - Return type: List<Appointment>
 //      - Parameters: String doctorName, Long patientId
-    @Query("select Appointment.id , Appointment.status , Appointment.appointmentTime from Appointment where  Appointment.doctor.name like '%'+?1+'%' and Appointment .patient.id = ?2")
-    public List<Appointment> filerByDoctorNameAndPatientId(Long doctorName, Long patientId);
+    @Query("""
+            SELECT a
+            FROM Appointment a
+            JOIN a.doctor d
+            JOIN a.patient p
+            WHERE LOWER(d.name) LIKE LOWER(CONCAT('%', :doctorName, '%'))
+              AND p.id = :patientId
+            """)
+    public List<Appointment> filerByDoctorNameAndPatientId(@Param("doctorName") String doctorName, @Param("patientId") Long patientId);
 
     //    - **filterByDoctorNameAndPatientIdAndStatus**:
 //      - This method retrieves appointments based on a doctor’s name (using a LIKE query), patient’s ID, and a specific appointment status.
 //      - Return type: List<Appointment>
 //      - Parameters: String doctorName, Long patientId, int status
-    @Query("select Appointment.id , Appointment.status , Appointment.appointmentTime from Appointment where  Appointment.doctor.name like '%'+?1+'%' and Appointment .patient.id = ?2 and Appointment .status = ?3")
-    public List<Appointment> filterByDoctorNameAndPatientIdAndStatus(String doctorName, Long patientId, int status);
+    @Query("""
+            SELECT a
+            FROM Appointment a
+            JOIN a.doctor d
+            JOIN a.patient p
+            WHERE LOWER(d.name) LIKE LOWER(CONCAT('%', :doctorName, '%'))
+              AND p.id = :patientId
+              AND a.status = :status
+            """)
+    public List<Appointment> filterByDoctorNameAndPatientIdAndStatus(@Param("doctorName") String doctorName, @Param("patientId") Long patientId, @Param("status") int status);
 
     //    - **updateStatus**:
 //      - This method updates the status of a specific appointment based on its ID.
 //      - Return type: void
 //      - Parameters: int status, long id
+    @Transactional
     @Modifying
-    public void updateStatus(int status, long id);
+    @Query("UPDATE Appointment a SET a.status = :status WHERE a.id = :id")
+    public void updateStatus(@Param("status") int status, @Param("id") long id);
 
 // 3. @Modifying and @Transactional annotations:
 //    - The @Modifying annotation is used to indicate that the method performs a modification operation (like DELETE or UPDATE).
