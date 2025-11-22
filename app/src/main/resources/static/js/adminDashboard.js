@@ -71,8 +71,8 @@
     If saving fails, show an error message
 */
 import {openModal} from "./components/modals.js";
-import {getDoctors, filterDoctors, saveDoctor} from "./services/doctorServices";
-import {createDoctorCard} from "./components/doctorCard";
+import {getDoctors, filterDoctors} from "./services/doctorServices.js";
+import {createDoctorCard} from "./components/doctorCard.js";
 
 
 document.getElementById('addDocBtn').addEventListener('click', () => {
@@ -112,6 +112,7 @@ function filterDoctorsOnChange(event) {
 
 window.onload = () => {
     loadDoctorCards();
+    document.getElementById('modal').style.display = 'none';
     document.getElementById("searchBar").addEventListener("input", filterDoctorsOnChange);
     document.getElementById("filterTime").addEventListener("change", filterDoctorsOnChange);
     document.getElementById("filterSpecialty").addEventListener("change", filterDoctorsOnChange);

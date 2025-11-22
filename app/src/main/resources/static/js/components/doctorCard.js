@@ -41,7 +41,7 @@ Import the overlay function for booking appointments from loggedPatient.js
 */
 
 import { API_BASE_URL } from "../config/config.js";
-import {deleteDoctor} from "../services/doctorServices";
+import {deleteDoctor} from "../services/doctorServices.js";
 const DOCTOR_API = API_BASE_URL + '/doctor';
 
 export function createDoctorCard(doctor) {
@@ -56,13 +56,13 @@ export function createDoctorCard(doctor) {
     name.textContent = doctor.name;
 
     const specialization = document.createElement("p");
-    specialization.textContent = doctor.specialization;
+    specialization.textContent = doctor.specialty;
 
     const email = document.createElement("p");
     email.textContent = doctor.email;
 
     const availability = document.createElement("p");
-    availability.textContent = doctor.availability;
+    availability.textContent = doctor.availableTimes;
 
     infoDiv.appendChild(name);
     infoDiv.appendChild(specialization);

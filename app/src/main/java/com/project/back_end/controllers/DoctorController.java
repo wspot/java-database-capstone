@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("${api.path}" + "doctor")
+@RequestMapping("${api.path}doctor")
 public class DoctorController {
 
 // 1. Set Up the Controller Class:
@@ -71,7 +71,7 @@ public class DoctorController {
 //    - If the doctor already exists, returns a conflict response; otherwise, adds the doctor and returns a success message.
 
     @PostMapping("/{token}")
-    public ResponseEntity<String> saveDoctor(@PathVariable("token") String token, @RequestBody Doctor doctor) {
+    public @ResponseBody ResponseEntity<String> saveDoctor(@PathVariable("token") String token, @RequestBody Doctor doctor) {
         if (this.service.validateToken(token, "admin").getStatusCode().is2xxSuccessful()) {
             int result = this.doctorService.saveDoctor(doctor);
             if (result == 1) {

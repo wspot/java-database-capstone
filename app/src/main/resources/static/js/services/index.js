@@ -66,6 +66,8 @@ const DOCTOR_API = API_BASE_URL + '/doctor/login';
 window.onload = function () {
     const adminBtn = document.getElementById('adminLogin');
     const doctorBtn = document.getElementById('doctorLogin');
+    const patientLoginBtn = document.getElementById('patientLogin');
+
     if (adminBtn) {
         adminBtn.addEventListener('click', () => {
             openModal('adminLogin');
@@ -76,6 +78,12 @@ window.onload = function () {
         doctorBtn.addEventListener('click', () => {
             openModal('doctorLogin');
         });
+    }
+
+    if(patientLoginBtn) {
+        patientLoginBtn.addEventListener('click', () => {
+            openModal('patientLogin');
+        })
     }
 }
 
@@ -105,8 +113,10 @@ export async function adminLoginHandler() {
     }
 }
 
-export async function doctorLoginHandler(username, password) {
-    const doctor = {username, password};
+export async function doctorLoginHandler() {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const doctor = {email, password};
     try {
         const response = await fetch(`${DOCTOR_API}`, {
             method: "POST",

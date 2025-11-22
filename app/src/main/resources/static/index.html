@@ -116,10 +116,8 @@ and triggers modal-based login functionality.
 <body>
 
 <div id="modal" class="modal">
-    <button id="closeModal">close</button>
-    <div id="modal-body">
-
-    </div>
+    <span id="closeModal" class="close">&times;</span>
+    <div id="modal-body" class="modal-content"></div>
 </div>
 
 <div class="container">
@@ -129,8 +127,8 @@ and triggers modal-based login functionality.
 
             <h2>Select Your Role</h2>
             <button id="adminLogin">Admin</button>
-            <button id="choose-patient-button" onclick="onChoosePatient()">Patient</button>
-            <button id="choose-doctor-button" onclick="onChooseDoctor()">Doctor</button>
+            <button id="patientLogin">Patient</button>
+            <button id="doctorLogin">Doctor</button>
 
         </main>
         <div id="footer"></div>

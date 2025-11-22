@@ -93,21 +93,19 @@ export async function deleteDoctor(id, token) {
 
 export async function saveDoctor(doctor, token) {
     try {
-        const response = await fetch(`${DOCTOR_API}`,
+        const response = await fetch(`${DOCTOR_API}/${token}`,
             {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
-                    "Authorization": `Bearer ${token}`
                 },
                 body: JSON.stringify(doctor)
             }
         );
-        const result = await response.json();
         if (!response.ok) {
             return {success: false, message: "Something went wrong"};
         }
-        return {success: response.ok, message: result.message}
+        return {success: true, message: "doctor saved"};
     } catch (error) {
         console.error("Error :: saveDoctor :: ", error)
         return {success: false, message: error.message}

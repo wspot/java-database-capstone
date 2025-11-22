@@ -115,9 +115,10 @@ with search, filter, and modal functionality.
     <title>Admin dashboard</title>
     <link rel="stylesheet" th:href="@{/assets/css/adminDashboard.css}">
     <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+    <link rel="icon" th:href="@{/assets/images/logo/logo.png}" type="image/x-icon">
     <script th:src="@{/js/render.js}" defer></script>
     <script th:src="@{/js/util.js}" defer></script>
-    <script th:src="@{/js/components/header.js}" defer></script>
+    <script th:type="module" th:src="@{/js/components/header.js}" defer></script>
     <script th:src="@{/js/components/footer.js}" defer></script>
 </head>
 
@@ -127,19 +128,41 @@ with search, filter, and modal functionality.
         <div id="header"></div>
         <main class="main-content">
 
-            <input type="text" id="searchBar" placeholder="search by doctor name"/>
+            <div class="filters-container">
+                <div class="vertical-filter">
+                    <label for="searchBar">Doctor name</label>
+                    <input type="text" id="searchBar" placeholder="search by doctor name" class="input-field"/>
+                </div>
 
-            <label for="filterTime">Choose a time:</label>
-            <select name="filterTime" id="filterTime">
-                <option value="AM">AM</option>
-                <option value="PM">PM</option>
-            </select>
+                <div class="vertical-filter">
+                    <label for="filterTime">Choose a time:</label>
+                    <select name="filterTime" id="filterTime" class="input-field">
+                        <option value="AM">AM</option>
+                        <option value="PM">PM</option>
+                    </select>
+                </div>
 
-            <label for="filterSpecialty">Choose a criteria:</label>
-            <select name="filterSpecialty" id="filterSpecialty">
-                <option value="Cardiologist">Cardiologist</option>
-                <option value="Dentist">Dentist</option>
-            </select>
+                <div class="vertical-filter">
+                    <label for="filterSpecialty">Choose a criteria:</label>
+                    <select name="filterSpecialty" id="filterSpecialty" class="input-field">
+                        <option value="">Specialization</option>
+                        <option value="cardiologist">Cardiologist</option>
+                        <option value="dermatologist">Dermatologist</option>
+                        <option value="neurologist">Neurologist</option>
+                        <option value="pediatrician">Pediatrician</option>
+                        <option value="orthopedic">Orthopedic</option>
+                        <option value="gynecologist">Gynecologist</option>
+                        <option value="psychiatrist">Psychiatrist</option>
+                        <option value="dentist">Dentist</option>
+                        <option value="ophthalmologist">Ophthalmologist</option>
+                        <option value="ent">ENT Specialist</option>
+                        <option value="urologist">Urologist</option>
+                        <option value="oncologist">Oncologist</option>
+                        <option value="gastroenterologist">Gastroenterologist</option>
+                        <option value="general">General Physician</option>
+                    </select>
+                </div>
+            </div>
 
             <div id="content"></div>
 
@@ -150,7 +173,7 @@ with search, filter, and modal functionality.
 
 <div id="modal" class="modal">
     <span id="closeModal" class="close">&times;</span>
-    <div id="modal-body"></div>
+    <div id="modal-body" class="modal-content"></div>
 </div>
 
 <script th:type="module" th:src="@{/js/adminDashboard.js}" defer></script>
