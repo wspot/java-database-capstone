@@ -110,7 +110,6 @@ function filterDoctorsOnChange() {
       contentDiv.innerHTML = "";
 
       if (doctors.length > 0) {
-        console.log(doctors);
         doctors.forEach(doctor => {
           const card = createDoctorCard(doctor);
           contentDiv.appendChild(card);

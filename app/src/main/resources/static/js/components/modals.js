@@ -87,7 +87,18 @@ export function openModal(type) {
     }
 
     if (type === "patientLogin") {
-        document.getElementById("loginBtn").addEventListener("click", patientLogin);
+        document.getElementById("loginBtn").addEventListener("click", () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            patientLogin({email, password}).then((result) => {
+                if(result){
+                    localStorage.setItem('token', result.token);
+                    selectRole("loggedPatient");
+                }else {
+                    alert("Error Login");
+                }
+            })
+        });
     }
 
     if (type === 'addDoctor') {
@@ -103,7 +114,7 @@ export function openModal(type) {
             const data = {name, specialty, email, password, phone, availableTimes, appointments: []};
             const token = localStorage.getItem('token');
             saveDoctor(data, token).then((response) => {
-                if(response.success){
+                if (response.success) {
                     document.getElementById('modal').style.display = 'none';
                 }
                 alert(response.message);

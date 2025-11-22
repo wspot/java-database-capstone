@@ -116,7 +116,7 @@ export async function filterDoctors(name, time, specialty) {
     const params = new URLSearchParams({name, time, specialty});
 
     try {
-        const response = await fetch(`${DOCTOR_API}?${params.toString()}`, {
+        const response = await fetch(`${DOCTOR_API}/filter/${name}/${time}/${specialty}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -124,8 +124,7 @@ export async function filterDoctors(name, time, specialty) {
         });
 
         if (response.ok) {
-            const data = await response.json();
-            return data.doctors;
+            return await response.json();
         } else {
             console.error("Failed to fetch doctors:", response.statusText);
             return {doctors: []};

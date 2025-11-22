@@ -75,9 +75,7 @@ import {getDoctors, filterDoctors} from "./services/doctorServices.js";
 import {createDoctorCard} from "./components/doctorCard.js";
 
 
-document.getElementById('addDocBtn').addEventListener('click', () => {
-    openModal('addDoctor');
-});
+
 
 function loadDoctorCards() {
     const contentDiv = document.getElementById("content");
@@ -112,7 +110,6 @@ function filterDoctorsOnChange(event) {
 
 window.onload = () => {
     loadDoctorCards();
-    document.getElementById('modal').style.display = 'none';
     document.getElementById("searchBar").addEventListener("input", filterDoctorsOnChange);
     document.getElementById("filterTime").addEventListener("change", filterDoctorsOnChange);
     document.getElementById("filterSpecialty").addEventListener("change", filterDoctorsOnChange);

@@ -139,7 +139,7 @@ public class DoctorController {
 //    - Accepts `name`, `time`, and `speciality` as path variables.
 //    - Calls the shared `Service` to perform filtering logic and returns matching doctors in the response.
     @GetMapping("/filter/{name}/{time}/{speciality}")
-    public Map<String, Object> filer(@PathVariable("name") String name, @PathVariable("time") String time, @PathVariable("speciality") String speciality) {
+    public Map<String, Object> filter(@PathVariable("name") String name, @PathVariable("time") String time, @PathVariable("speciality") String speciality) {
         return this.service.filterDoctor(name, speciality, time);
     }
 

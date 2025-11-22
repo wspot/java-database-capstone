@@ -42,10 +42,12 @@ function loadDoctorCards() {
       console.error("Failed to load doctors:", error);
     });
 }
+
+
 // Filter Input
-document.getElementById("searchBar").addEventListener("input", filterDoctorsOnChange);
-document.getElementById("filterTime").addEventListener("change", filterDoctorsOnChange);
-document.getElementById("filterSpecialty").addEventListener("change", filterDoctorsOnChange);
+document.getElementById("searchBar").addEventListener("input",() => filterDoctorsOnChange);
+document.getElementById("filterTime").addEventListener("change", () => filterDoctorsOnChange);
+document.getElementById("filterSpecialty").addEventListener("change", () => filterDoctorsOnChange);
 
 
 

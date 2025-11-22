@@ -170,7 +170,7 @@ public class DoctorService {
     public Map<String, Object> findDoctorByName(String name) {
         try {
             Map<String, Object> responseMap = new HashMap<>();
-            List<Doctor> doctors = this.doctorRepository.findByNameLike(name);
+            List<Doctor> doctors = this.doctorRepository.findByNameLike("%" + name + "%");
             responseMap.put("doctors", doctors);
             return responseMap;
         } catch (Exception e) {
@@ -196,12 +196,12 @@ public class DoctorService {
         }).toList();
     }
 
-// 11. **filterDoctorsByNameSpecialityandTime Method**:
+// 11. **filterdoctorsbynamespecilityandtime Method**:
 //    - Filters doctors based on their name, specialty, and availability during a specific time (AM/PM).
 //    - The method fetches doctors matching the name and specialty criteria, then filters them based on their availability during the specified time period.
 //    - Instruction: Ensure proper filtering based on both the name and specialty as well as the specified time period.
 
-    public Map<String, Object> filterDoctorsByNameSpecilityandTime(String name, String specialty, String amOrPm) {
+    public Map<String, Object> filterdoctorsbynamespecilityandtime(String name, String specialty, String amOrPm) {
         try {
             Map<String, Object> responseMap = new HashMap<>();
             List<Doctor> doctors = this.doctorRepository.findByNameContainingIgnoreCaseAndSpecialtyIgnoreCase(name, specialty);

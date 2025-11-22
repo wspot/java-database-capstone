@@ -15,10 +15,7 @@ import org.springframework.http.ResponseEntity;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.chrono.ChronoLocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @org.springframework.stereotype.Service
 public class Service {
@@ -93,13 +90,22 @@ public class Service {
 // This flexible filtering mechanism allows the frontend or consumers of the API to search and narrow down doctors based on user criteria.
 
     public Map<String, Object> filterDoctor(String name, String specialty, String time) {
-        if (name == null && specialty == null && time == null) {
+        if (Objects.equals(name, "null") && Objects.equals(specialty, "null") && Objects.equals(time, "null")) {
             Map<String, Object> responseMap = new HashMap<>();
             List<Doctor> doctors = this.doctorService.getDoctors();
             responseMap.put("doctors", doctors);
             return responseMap;
         }
-        return this.doctorService.filterDoctorsByNameSpecilityandTime(name, specialty, time);
+
+        if (Objects.equals(time, "null") && !Objects.equals(name, "null") && !Objects.equals(specialty, "null")) {
+            return this.doctorService.filterDoctorByNameAndSpecility(name, specialty);
+        }
+
+        if (Objects.equals(time, "null") && Objects.equals(specialty, "null")) {
+            return this.doctorService.findDoctorByName(name);
+        }
+
+        return this.doctorService.filterdoctorsbynamespecilityandtime(name, specialty, time);
     }
 
 // 6. **validateAppointment Method**
