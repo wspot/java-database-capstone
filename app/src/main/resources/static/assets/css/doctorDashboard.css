@@ -90,9 +90,9 @@ Let me know if you'd like a consolidated style guide for the entire HospitalCRM 
     border-bottom: 1px solid #ddd;
  }
 
- tr:nth-child(even){color: #f9f9f959;}
+ tr:nth-child(even){color: black;}
 
- tr:nth-child(odd){color: #ffffffc0;}
+ tr:nth-child(odd){color: black;}
 
  tr:hover(odd){background-color: #015c5d39;}
 

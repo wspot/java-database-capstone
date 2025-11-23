@@ -115,7 +115,7 @@ This file defines the Doctor Dashboard interface, allowing doctors to view and m
         <script th:type="module" th:src="@{/js/doctorDashboard.js}" defer></script>
         <script th:type="module" th:src="@{/js/components/header.js}" defer></script>
         <script th:src="@{/js/components/footer.js}" defer></script>
-        <script  th:type="module" th:src="@{/js/components/patientRows.js}" defer></script>
+        <script th:type="module" th:src="@{/js/components/patientRows.js}" defer></script>
     </head>
 
     <body>
@@ -125,7 +125,7 @@ This file defines the Doctor Dashboard interface, allowing doctors to view and m
                 <main class="main-content">
 
                     <input type="text" id="searchBar" class="searchBar" placeholder="Search Bar for custom output" />
-                    <input type="date" id="datePicker" placeholder="Select a date" />
+                    <input type="date" id="datePicker" class="searchBar" placeholder="Select a date" />
                     <button id="todayButton">today's appointments</button>
 
                     <h2  id="tableHeader" class="table-header"></h2>

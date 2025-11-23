@@ -115,14 +115,14 @@ public class AppointmentService {
 //    - It uses `@Transactional` to ensure that database operations are consistent and handled in a single transaction.
 //    - Instruction: Ensure the correct use of transaction boundaries, especially when querying the database for appointments.
     @Transactional
-    public Map<String, Object> getAppointment(String pname, LocalDate date, String token) {
+    public Map<String, Object> getAppointment(String patientName, LocalDate date, String token) {
         Doctor doctor = this.doctorRepository.findByEmail(this.tokenService.extractEmail(token));
         List<Appointment> appointmentList = this.appointmentRepository.findByDoctorIdAndAppointmentTimeBetween(doctor.getId(), LocalDateTime.of(date, LocalTime.MIN), LocalDateTime.of(date, LocalTime.MAX));
         HashMap<String, Object> response = new HashMap<>();
-        if (pname.isEmpty()) {
+        if (patientName.isEmpty() || patientName.equals("null")) {
             response.put("appointments", appointmentList);
         } else {
-            response.put("appointments", appointmentList.stream().filter(appointment -> appointment.getPatient().getName().equals(pname)));
+            response.put("appointments", appointmentList.stream().filter(appointment -> appointment.getPatient().getName().equals(patientName)));
         }
         return response;
     }
