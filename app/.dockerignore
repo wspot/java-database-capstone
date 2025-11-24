@@ -1,0 +1,28 @@
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+
+# Logs
+*.log
+logs/
+log/
+
+.git
+.gitignore
+.gitmodules
+
+
+# Docker
+Dockerfile~
+docker-compose.yml~
+.docker/
+
+

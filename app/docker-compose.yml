@@ -1,0 +1,85 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: smart-clinic
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/cms?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/cms
+
+      API_PATH: /
+      JWT_SECRET: JCFAIyReJSQkJCUjIyMjJEREQ1BOMDIzNEZDRkRQRDg2NzBNJCFAIyReJSQkJCU...
+
+    networks:
+      - smart-clinic-network
+
+  mysql:
+    image: mysql:8.0
+    restart: always
+    ports:
+      - "3307:3306"   # avoid conflict with local MySQL
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cms   # FIXED
+    healthcheck:
+      test: ["CMD", "mysql", "-uroot", "-proot", "-e", "SELECT 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - smart-clinic-network
+
+  mongodb:
+    image: mongo:6.0
+    restart: always
+    ports:
+      - "27017:27017"
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.runCommand({ ping: 1 })"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - smart-clinic-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - smart-clinic-network
+
+volumes:
+  mysql_data:
+  mongo_data:
+
+networks:
+  smart-clinic-network:
+    driver: bridge
